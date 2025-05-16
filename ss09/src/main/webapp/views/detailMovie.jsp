@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Trang
@@ -10,12 +11,32 @@
 <head><title>Movie Details</title></head>
 <body>
 <h2>${movie.title}</h2>
-<p><strong>Director:</strong> ${movie.director}</p>
-<p><strong>Genre:</strong> ${movie.genre}</p>
-<p><strong>Description:</strong> ${movie.description}</p>
-<p><strong>Duration:</strong> ${movie.duration} minutes</p>
-<p><strong>Language:</strong> ${movie.language}</p>
+<p>Genre: ${movie.genre}</p>
+<p>Director: ${movie.director}</p>
 
-<a href="${pageContext.request.contextPath}/">Back to Home</a>
+<h3>Showtimes:</h3>
+<table border="1">
+    <tr>
+        <th>Show Time</th>
+        <th>Room</th>
+        <th>Available Seats</th>
+        <th>Format</th>
+    </tr>
+    <c:forEach var="s" items="${schedules}">
+        <tr>
+            <td>${s.showTime}</td>
+            <td>
+                <c:forEach var="r" items="${rooms}">
+                    <c:if test="${r.id == s.screenRoomId}">
+                        ${r.screenRoomName}
+                    </c:if>
+                </c:forEach>
+            </td>
+            <td>${s.availableSeats}</td>
+            <td>${s.format}</td>
+        </tr>
+    </c:forEach>
+</table>
+
 </body>
 </html>
